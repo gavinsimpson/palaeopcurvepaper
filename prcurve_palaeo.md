@@ -28,15 +28,6 @@ Figure \ref{legendre-data-fig} shows a small artificial data set of 3 species ob
 
 
 
-
-```
-## Warning: "scaling" is not a graphical parameter
-```
-
-```
-## Warning: "scaling" is not a graphical parameter
-```
-
 ![\label{legendre-data-fig}](figure/legendre-data-plot.pdf) 
 
 
@@ -69,31 +60,6 @@ The models discussed so far are both straight lines through the data. Depending 
 
 
 
-
-
-```
-## Warning: "lwd.curve" is not a graphical parameter
-```
-
-```
-## Warning: "lwd.curve" is not a graphical parameter
-```
-
-```
-## Warning: "lwd.curve" is not a graphical parameter
-```
-
-```
-## Warning: "lwd.curve" is not a graphical parameter
-```
-
-```
-## Warning: "lwd.curve" is not a graphical parameter
-```
-
-```
-## Warning: "lwd.curve" is not a graphical parameter
-```
 
 ![\label{iterations-fig}](figure/iterations-figure.pdf) 
 

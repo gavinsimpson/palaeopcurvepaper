@@ -13,7 +13,7 @@ bibliography: prcurve_palaeo.bib
 -->
 
 ```{r libraries, echo=FALSE, cache=FALSE, results='hide'}
-require(analogue)
+require(analogue, quietly = TRUE)
 ```
 
 # Abstract
@@ -34,8 +34,8 @@ rownames(ll) <- paste0("site", seq_len(NROW(ll)))
 ll.pca <- rda(ll)
 ```
 
-```{r legendre-data-plot, echo=FALSE, cache=TRUE, dependson='legendre-data', fig.height=7, fig.width=7, fig.cap="\\label{legendre-data-fig}"}
-op <- par(mar = c(4,4,0.5,2) + 0.1)
+```{r legendre-data-plot, echo=FALSE, cache=TRUE, dependson='legendre-data', fig.height=6, fig.width=7, fig.cap="\\label{legendre-data-fig}"}
+op <- par(mar = c(4,4,0.5,1) + 0.1)
 layout(matrix(c(1,1,1,3,
                 2,2,2,3,
                 2,2,2,3), ncol = 4, byrow = TRUE))
@@ -166,7 +166,7 @@ In the least squares linear regression relating $x$ and $y$ with $y$ in the resp
 
 The models discussed so far are both straight lines through the data. Depending on the relationship between $x$ and $y$ a more complex non-linear relationship may be required. Smoothing splines are a semi-parametric generalisation of the linear least squares model, where a smooth curve is fitted to the data that minimises the sum of squared distances in $y$ subject to some constraint on the complexity of the fitted curve. The relationship between $x$ and $y$ is derived from the data themselves rather than specified *a priori* by the analyst, but, as with linear regression, the curve is fitted by consideration of the error in $y$ only. The smoothing spline fit to the example data, using \~5.49 degrees of freedom (as selected via generalised cross-validation; GCV) is shown in panel c of Figure \ref{PCcomparison}. Principal curves combine the features of orthogonal errors from PCA with the non-linear, data analytical fit from smoothing splines. Panel d shows a principal curve fitted to the example data.
 
-```{r iterations-prcurve, echo=FALSE, results='hide', dependson="comparison-figure"}
+```{r iterations-prcurve, echo=FALSE, results='hide', dependson="comparison-figure", cache=TRUE}
 ## f0 is a fudge to get it to display the intial fit, which analogue:::prcurve can't currently show
 f0 <- prcurve(d.s, method = "pca", trace = FALSE, complexity = 2)
 f1 <- prcurve(d.s, method = "pca", trace = TRUE, maxit = 1)
@@ -182,18 +182,18 @@ prevCol <- rgb(255, 0, 0, 126, maxColorValue = 255)
 plot(f0, d.s, cex = CEX)
 title(sub = "Initial Curve: PC1")
 plot(f1, d.s, cex = CEX)
-lines(f0, d.s, segments = FALSE, col = prevCol, lwd.curve = 1)
+lines(f0, d.s, segments = FALSE, col = prevCol, lwd = 1)
 lines(f1, d.s, segments = FALSE)
 title(sub = "Iteration: 1")
 plot(f4, d.s, cex = CEX)
-lines(f0, d.s, segments = FALSE, col = prevCol, lwd.curve = 1)
-lines(f1, d.s, segments = FALSE, col = prevCol, lwd.curve = 1)
+lines(f0, d.s, segments = FALSE, col = prevCol, lwd = 1)
+lines(f1, d.s, segments = FALSE, col = prevCol, lwd = 1)
 lines(f4, d.s, segments = FALSE)
 title(sub = "Iteration: 4")
 plot(f12, d.s, cex = CEX)
-lines(f0, d.s, segments = FALSE, col = prevCol, lwd.curve = 1)
-lines(f1, d.s, segments = FALSE, col = prevCol, lwd.curve = 1)
-lines(f4, d.s, segments = FALSE, col = prevCol, lwd.curve = 1)
+lines(f0, d.s, segments = FALSE, col = prevCol, lwd = 1)
+lines(f1, d.s, segments = FALSE, col = prevCol, lwd = 1)
+lines(f4, d.s, segments = FALSE, col = prevCol, lwd = 1)
 lines(f12, d.s, segments = FALSE)
 title(sub = "Iteration: 12. Converged")
 par(op)
