@@ -29,3 +29,20 @@ This work is published from:
       content="CA" about="www.fromthebottomoftheheap.net">
   Canada</span>.
 </p>
+
+## Compiling the Rmd source
+I am using **knitr** to write the manuscript with embedded R code. To process the files into the final PDF, the following R code can be used
+
+    require("knitr") ## load the knitr package
+    
+    render_markdown() ## set the output render hooks, allows Pandoc-flavour markdown
+    
+    opts_chunk$set(dev = "pdf") ## prefer PDF figures
+    
+    ## process the R code into a final markdown source file
+    ## assumes you are in the directory where the file is located
+    knit("prcurve_palaeo.Rmd")
+    
+    ## process the final markdown source to PDF using Pandoc
+    pandoc("prcurve_palaeo.md", format = "latex")
+
