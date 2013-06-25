@@ -5,6 +5,27 @@ This is a public repository for a paper I am writing on the use of principal cur
 This is a work in progress *and* an experiment in writing a paper in the open using Github and the ideals of reproducible research; if you have any comments or suggestions uses the [issues tab](https://github.com/gavinsimpson/palaeopcurvepaper/issues) to make them.
 
 ## Licence
-The paper (the markdown source file [prcurve_palaeo.md] and the resulting PDF [prcurve_palaeo.pdf] are copyright &copy; Gavin Simpson 2013, some rights reserved. You are free to use the text unedr the terms of the Creative Commons By-Attribution licence.
+### The manuscript
+The paper (the markdown source file [prcurve_palaeo.md](https://github.com/gavinsimpson/palaeopcurvepaper/blob/master/prcurve_palaeo.md) and the resulting PDF [prcurve_palaeo.pdf](https://github.com/gavinsimpson/palaeopcurvepaper/blob/master/prcurve_palaeo.pdf)) are copyright &copy; Gavin L. Simpson 2013, some rights reserved. You are free to use the text under the terms of the Creative Commons By-Attribution 3.0 Unported licence.
 
 <a rel="license" href="http://creativecommons.org/licenses/by/3.0/deed.en_GB"><img alt="Creative Commons Licence" style="border-width:0" src="http://i.creativecommons.org/l/by/3.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text" property="dct:title" rel="dct:type">Summarising stratigraphic data using principal curves</span> by <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Gavin L. Simpson</span> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/3.0/deed.en_GB">Creative Commons Attribution 3.0 Unported License</a>.
+
+### R Code
+In so far as I can (it is simply interpretted code calling existing R functions in existing R packages), I waive all copyright and related or neighboring rights to the R Code embedded in the file [prcurve_palaeo.Rmd](https://github.com/gavinsimpson/palaeopcurvepaper/blob/master/prcurve_palaeo.Rmd).
+<p xmlns:dct="http://purl.org/dc/terms/" xmlns:vcard="http://www.w3.org/2001/vcard-rdf/3.0#">
+  <a rel="license"
+     href="http://creativecommons.org/publicdomain/zero/1.0/">
+    <img src="http://i.creativecommons.org/p/zero/1.0/88x31.png" style="border-style: none;" alt="CC0" />
+  </a>
+  <br />
+  To the extent possible under law,
+  <a rel="dct:publisher"
+     href="www.fromthebottomoftheheap.net">
+    <span property="dct:title">Gavin L. Simpson</span></a>
+  has waived all copyright and related or neighboring rights to
+  <span property="dct:title">R code for the paper "Summarising stratigraphic data using principal curves"</span>.
+This work is published from:
+<span property="vcard:Country" datatype="dct:ISO3166"
+      content="CA" about="www.fromthebottomoftheheap.net">
+  Canada</span>.
+</p>
