@@ -10,7 +10,14 @@ number-sections:
 
 format: latex
 bibliography: prcurve_palaeo.bib
+include-in-header: prcurve_palaeo.sty
 -->
+
+
+
+
+
+
 
 
 

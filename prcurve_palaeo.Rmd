@@ -10,7 +10,17 @@ number-sections:
 
 format: latex
 bibliography: prcurve_palaeo.bib
+include-in-header: prcurve_palaeo.sty
 -->
+
+```{r prelim, engine='cat', engine.opts=list(file='prcurve_palaeo.sty')}
+% Extra header text for latex
+\usepackage[letterpaper,margin=2cm]{geometry}
+```
+
+```{r prelim2, engine='cat', engine.opts=list(file='prcurve_palaeo.sty', append=TRUE)}
+% use append=TRUE for cat() to append to an existing file
+```
 
 ```{r libraries, echo=FALSE, cache=FALSE, results='hide'}
 suppressPackageStartupMessages(require(analogue, quietly = TRUE))
