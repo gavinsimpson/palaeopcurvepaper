@@ -1,6 +1,6 @@
 % Summarising stratigraphic data using principal curves
 % Gavin L. Simpson
-% May 30th, 2013
+% March 18, 2014
 
 <!--pandoc
 format: html
@@ -21,6 +21,8 @@ bibliography: prcurve_palaeo.bib
 
 # Introduction
 Stratigraphic data are generally high dimensional, often exceedingly so in the case of speciose proxies such as diatoms. It is difficult, if not impossible, to identify the major changes in such data directly, and some form of data reduction is required to highlight these changes. Ordination methods, most notably principal components analysis (PCA) and correspondence analysis (CA) and its detrended version (DCA), are often used by palaeolimnologists to identify the main pattern or patterns in a stratigraphic sequence. The locations of samples on the first one or two ordination axes are usually presented alongside the main taxa or variables in the proxy data and are essentially used as a summary of change in the set of proxies analysed.
+
+TODO
 
 ## Continual compositional change along ecological gradients
 Figure \ref{legendre-data-fig} shows a small artificial data set of 3 species observed at 19 sites along a gradient, taken from Table 9.7 of @legendre_numerical_2012 [p. 482]. From the upper panel in Figure \ref{legendre-data-fig} it is clear that species composition changes progressively along the gradient represented by the sampling locations. The lower panel of Figure \ref{legendre-data-fig}, a PCA applied to the data, exhibits a strong curvilinear pattern in the ordination space of components 1 and 2 (note the curvature extends into the thrid dimension). Such curvilinear patterns are known as a *horseshoe* (when the end points of the curve bend back in on the curve itself) or an *arch* (when the end points of the curve do not bend back on themselves) and have long been noted in the ecological literature [e.g. @goodall_objective_1954; @noy-meir_principal_1970; @swan_examination_1970]. In this case the end points bend very strongly inwards due to the PCA considering the absence of species 2 a similarity between these samples.
@@ -94,7 +96,45 @@ I favour a more data-driven approach wherein at step 2 above, instead of using t
 
 Once a principal curve has been fitted it is essential that the resulting curve is investigated as over-fitting is easy to achieve. The algorithm can usually be monitored during fitting, to see how the curve adapts to the data. This coupled with the trace output for the residual variance at each iteration can help to assess the complexity of the fitted curve. Subsequently, the response curves for the variables along the fitted curve should also be checked. Overly-fitted principal curves can usually be diagnosed through complex, multimodal response curves for some or all variables. Such response curves can be observed even if the principal curve itself does not appear to be complex when plotted.
 
+The remainder of this paper will use a combination of simulated data and real data examples to illustrate the properties of principal curves applied to palaeo data and to illustrate the improved ability of principal curves to extract long or dominant gradients from stratigrpahic data compared to the other ordination methods, such as PCA and CA.
+
+
+
+
+![\label{packing-model-fig}](figure/packing-model-figure.pdf) 
+
 # Methods
+
+## Simulated data
+Data sets with known properties were simulated from three distinct models
+
+ 1. simple species packing model
+ 2. a more complex single-gradient model
+ 3. a more complex two-gradient model
+
+In each case the amount of noise was varied. PCA, CA and a principal curve were fitted to each data set and noise combination and the amount of variation explained recorded.
+
+### Simple species packing model
+In the species packing model Gaussian species response curves along an environmental gradient are subject to four conditions
+
+ 1. species tolerances $t_k$ are equal ($t_k = t \forall k$)
+ 2. equal maxima $c_k$ for all species ($c_k = c \forall k$)
+ 3. species optima $u_k$ are dispersed equally along the environmental gradient
+ 4. sampling locations along the gradient cover the entire range of the gradient and are also equally spaced.
+
+Data were generated from this model consisting of $n = 100$ samples, and $m = 50$ species, each with tolerance $t = 10$ and height $h = 10$. These parameters define the mean response or expectation $E()$. Simulated count data for each species was then generated via random draws from a negative binomial distribution (dispersion parameter $\theta = 1$ ($\alpha = 1$)) with mean given by the value of the response function along the gradient. An example data set is shown in Figure \ref{packing-model-fig}.
+
+### Complex single gradient model
+
+### Complex 2-d gradient model
+
+## Palaeoecological examples
+
+### Abernethy Forest
+
+### Round Loch of Glenhead
+
+## Statistical analysis
 
 # Results
 
