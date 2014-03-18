@@ -3,3 +3,6 @@
 
 ## ignore backup files
 *~
+
+## ignore files in ./cache
+cache/*
