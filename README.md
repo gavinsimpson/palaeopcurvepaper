@@ -13,9 +13,9 @@ You'll see some warnings about `scaling` not being a graphical parameter if you 
 
 You'll also need
 
- * [knitr](http://yihui.name/knitr/), Yihui Xie excellent R package for processing embedded R code in documents (on CRAN)
+ * [knitr](http://yihui.name/knitr/), Yihui Xie's excellent R package for processing embedded R code in documents (on CRAN)
  * [vegan](http://cran.r-project.org/web/packages/vegan/index.html), our R package for multivariate & community ecology methods --- **analogue** depends on this so that shouldn't be an issue
- * [coenoflex](http://cran.r-project.org/web/packages/coenoflex/index.html), Dave Roberts' gradient-based coenospace vegetation simulator R package **(Note not currently used, but some simulation work to go into the paper uses it.)**
+ * [coenocliner](https://github.com/gavinsimpson/coenocliner), my coenocline simulator package for R. **coenocliner** is not on CRAN yet, but can be installed using Hadley Wickham's **devtools** package. See the [coenocliner](https://github.com/gavinsimpson/coenocliner) on [github](http://github.com) for installation instructions.
  * [Pandoc](http://johnmacfarlane.net/pandoc/) the wonderful universal document converter from John MacFarlane
 
 ### Licence
