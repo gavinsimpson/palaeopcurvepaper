@@ -11,18 +11,24 @@ number-sections:
 format: latex
 bibliography: prcurve_palaeo.bib
 include-in-header: prcurve_palaeo.sty
+smart:
+template: paper_template.latex
 -->
+
+```{r prelim-opts, echo=FALSE}
+opts_chunk$set(echo = FALSE, dev = "pdf")
+```
 
 ```{r prelim, engine='cat', engine.opts=list(file='prcurve_palaeo.sty')}
 % Extra header text for latex
-\usepackage[letterpaper,margin=2cm]{geometry}
+\usepackage[letterpaper,margin=1in]{geometry}
 ```
 
 ```{r prelim2, engine='cat', engine.opts=list(file='prcurve_palaeo.sty', append=TRUE)}
 % use append=TRUE for cat() to append to an existing file
 ```
 
-```{r libraries, echo=FALSE, cache=FALSE, results='hide'}
+```{r libraries, results='hide'}
 suppressPackageStartupMessages(require(analogue, quietly = TRUE))
 ```
 
@@ -38,7 +44,7 @@ TODO
 ## Continual compositional change along ecological gradients
 Figure \ref{legendre-data-fig} shows a small artificial data set of 3 species observed at 19 sites along a gradient, taken from Table 9.7 of @legendre_numerical_2012 [p. 482]. From the upper panel in Figure \ref{legendre-data-fig} it is clear that species composition changes progressively along the gradient represented by the sampling locations. The lower panel of Figure \ref{legendre-data-fig}, a PCA applied to the data, exhibits a strong curvilinear pattern in the ordination space of components 1 and 2 (note the curvature extends into the thrid dimension). Such curvilinear patterns are known as a *horseshoe* (when the end points of the curve bend back in on the curve itself) or an *arch* (when the end points of the curve do not bend back on themselves) and have long been noted in the ecological literature [e.g. @goodall_objective_1954; @noy-meir_principal_1970; @swan_examination_1970]. In this case the end points bend very strongly inwards due to the PCA considering the absence of species 2 a similarity between these samples.
 
-```{r legendre-data, cache=TRUE, echo=FALSE, results='hide'}
+```{r legendre-data, results='hide'}
 ll <- data.frame(Species1 = c(1,2,4,7,8,7,4,2,1,rep(0,10)),
                  Species2 = c(rep(0, 5),1,2,4,7,8,7,4,2,1, rep(0, 5)),
                  Species3 = c(rep(0, 10),1,2,4,7,8,7,4,2,1))
@@ -46,7 +52,7 @@ rownames(ll) <- paste0("site", seq_len(NROW(ll)))
 ll.pca <- rda(ll)
 ```
 
-```{r legendre-data-plot, echo=FALSE, cache=TRUE, dependson='legendre-data', fig.height=6, fig.width=7, fig.cap="\\label{legendre-data-fig}"}
+```{r legendre-data-plot, fig.height=4, fig.width=5, fig.cap="\\label{legendre-data-fig}"}
 op <- par(mar = c(4,4,0.5,1) + 0.1)
 layout(matrix(c(1,1,1,3,
                 2,2,2,3,
@@ -64,13 +70,13 @@ For the sake of argument, assume the gradient shown in Figure \ref{legendre-data
 
 Such horseshoe or arched configurations often occur in real palaeocological data. Consider the classic, well-studied late-glacial pollen sequence from Abernethy Forest, Scotland [@birks_studies_1978], the main pollen taxa from which are shown in Figure \ref{abernethy-strat}.
 
-```{r abernethy-strat-fig, echo=FALSE, fig.height=5, fig.width=7, fig.cap="\\label{abernethy-strat}"}
+```{r abernethy-strat-fig, fig.height=4, fig.width=6.5, fig.cap="\\label{abernethy-strat}"}
 data(abernethy)
 Stratiplot(Age ~ . - Depth, data = chooseTaxa(abernethy, n.occ = 5, max.abun = 10),
            type = c("g","l","h"), lwd.h = 1, sort = "wa", labelAt = 0, labelRot = 60)
 ```
 
-```{r abernethy-pca-setup, echo=FALSE, results='hide', cache=TRUE}
+```{r abernethy-pca-setup, results='hide'}
 aber.pca <- rda(abernethy[, -c(37,38)])
 scrs <- scores(aber.pca, choices = 1:2, display = "sites",
                scaling = 1)
@@ -81,7 +87,7 @@ pca.dat <- data.frame(Age = abernethy$Age,
 
 When PCA is applied to Abernethy data a pronounced arched configuration is observed with two strong directions of change that align with the first and second principal components (Figure \ref{abernethy-pca-fig}a). The first principal component largely acocunts for change after 9000 
 
-```{r abernethy-pca-plot, echo=FALSE, cache=TRUE, dependson='abernethy-pca-setup', fig.width=7, fig.height=4, fig.cap="\\label{abernethy-pca-fig}"}
+```{r abernethy-pca-plot, fig.width=6.5, fig.height=3, fig.cap="\\label{abernethy-pca-fig}"}
 layout(matrix(c(1,1,2,3), ncol = 4, byrow = TRUE),)
 op <- par(mar = c(5,5,1,0.2) + 0.1)
 ylim <- with(pca.dat, rev(range(Age)))
@@ -124,7 +130,7 @@ A principal curve (PCr) is a smooth, one-dimensional curve that passes through t
 $$y = -0.9x + 2x^{2} + -1.4x^{3} + \varepsilon$$
 where $\varepsilon$ is Gaussian noise with $\mu$ = 0 and $\sigma$ = 0.05.
 
-```{r comparison-figure, echo=FALSE, cache=TRUE, fig.height=7, fig.width=7, fig.cap="\\label{PCcomparison}Relationship between (a) linear regression, (b) principal components analysis, (c) smoothing splines, and (d) principal curves each applied a simple 2-dimensional data set."}
+```{r comparison-figure, fig.height=5, fig.width=5, fig.cap="\\label{PCcomparison}Relationship between (a) linear regression, (b) principal components analysis, (c) smoothing splines, and (d) principal curves each applied a simple 2-dimensional data set."}
 set.seed(123)
 N <- 50
 x <- seq(0, 1, length = N)
@@ -165,7 +171,7 @@ plot(y ~ x, data = d.s, type = "n", ylim = ylim, xlim = xlim, asp = 1, main = "c
 segments(d.s$x, d.s$y, p.ssp$x, p.ssp$y, col = "forestgreen")
 lines(p.ssp$x[ord.ssp], p.ssp$y[ord.ssp], col = "red", lwd = 2)
 points(y ~ x, data = d.s, pch = 21, bg = "white")
-## plot 4 - prinicpal curve
+## plot 4 - principal curve
 plot(y ~ x, data = d.s, type = "n", ylim = ylim, xlim = xlim, asp = 1, main = "d")
 segments(d.s$x, d.s$y, pc.d$s[,1], pc.d$s[,2], col = "forestgreen")
 lines(pc.d$s[pc.d$tag,], col = "red", lwd = 2)
@@ -178,7 +184,7 @@ In the least squares linear regression relating $x$ and $y$ with $y$ in the resp
 
 The models discussed so far are both straight lines through the data. Depending on the relationship between $x$ and $y$ a more complex non-linear relationship may be required. Smoothing splines are a semi-parametric generalisation of the linear least squares model, where a smooth curve is fitted to the data that minimises the sum of squared distances in $y$ subject to some constraint on the complexity of the fitted curve. The relationship between $x$ and $y$ is derived from the data themselves rather than specified *a priori* by the analyst, but, as with linear regression, the curve is fitted by consideration of the error in $y$ only. The smoothing spline fit to the example data, using \~5.49 degrees of freedom (as selected via generalised cross-validation; GCV) is shown in panel c of Figure \ref{PCcomparison}. Principal curves combine the features of orthogonal errors from PCA with the non-linear, data analytical fit from smoothing splines. Panel d shows a principal curve fitted to the example data.
 
-```{r iterations-prcurve, echo=FALSE, results='hide', dependson="comparison-figure", cache=TRUE}
+```{r iterations-prcurve, results='hide'}
 ## f0 is a fudge to get it to display the intial fit, which analogue:::prcurve can't currently show
 f0 <- prcurve(d.s, method = "pca", trace = FALSE, complexity = 2)
 f1 <- prcurve(d.s, method = "pca", trace = TRUE, maxit = 1)
@@ -186,7 +192,7 @@ f4 <- prcurve(d.s, method = "pca", trace = TRUE, maxit = 4)
 f12 <- prcurve(d.s, method = "pca", trace = TRUE, maxit = 12)
 ```
 
-```{r iterations-figure, echo=FALSE, dependson='iterations-prcurve', fig.height=7, fig.width=7, fig.cap="\\label{iterations-fig}"}
+```{r iterations-figure, fig.height=5, fig.width=5, fig.cap="\\label{iterations-fig}"}
 layout(matrix(1:4, ncol = 2, byrow = TRUE))
 op <- par(mar = c(5,4,1,1) + 0.1)
 CEX <- 0.8
@@ -244,7 +250,7 @@ Once a principal curve has been fitted it is essential that the resulting curve 
 
 The remainder of this paper will use a combination of simulated data and real data examples to illustrate the properties of principal curves applied to palaeo data and to illustrate the improved ability of principal curves to extract long or dominant gradients from stratigrpahic data compared to the other ordination methods, such as PCA and CA.
 
-```{r packing-model-data, echo=FALSE, cache = TRUE}
+```{r packing-model-data}
 require("coenocliner")
 ## Simulate a 100 unit 1-d gradient with counts from a negative binomial
 ## 50 species, equally spaced optima, equal tolerances, equal heights
@@ -259,10 +265,14 @@ set.seed(1)
 gsim <- sim1dNegbinom(gloc, gopt, gtol, gh, alpha = 1, expectation = FALSE)
 ```
 
-```{r packing-model-figure, echo=FALSE, dependson='packing-model-data', fig.height=6, fig.width=8, fig.cap="\\label{packing-model-fig}"}
+```{r packing-model-figure, fig.height=3, fig.width=6.5, dev.args=list(pointsize=8), fig.cap="\\label{packing-model-fig}"}
 layout(matrix(1:2, ncol = 2))
-matplot(gloc, gsimMu, type = "l", lty = "solid")
-matplot(gloc, gsim, type = "l", lty = "solid")
+op <- par(mar = c(5,4,0.5,0.5) + 0.1)
+xlab <- "Gradient"
+ylab <- "Abundance"
+matplot(gloc, gsimMu, type = "l", lty = "solid", xlab = xlab, ylab = ylab)
+matplot(gloc, gsim, type = "l", lty = "solid", xlab = xlab, ylab = ylab)
+par(op)
 layout(1)
 ```
 # Methods
