@@ -4,9 +4,7 @@ require("knitr")
 render_markdown()
 opts_chunk$set(dev = "pdf")
 
-knit("prcurve_palaeo.Rmd")
-
-pandoc("prcurve_palaeo.md", format = "latex")
+knit("prcurve_palaeo.Rmd"); pandoc("prcurve_palaeo.md", format = "latex")
 
 ## Run if you want to process LaTeX later, and add
 ## o: prcurve_palaeo.tex

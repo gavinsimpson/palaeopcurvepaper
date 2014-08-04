@@ -23,10 +23,6 @@ template: paper_template.latex
 
 
 
-
-
-
-
 # Abstract
 
 ##### Keywords
@@ -41,9 +37,7 @@ Figure \ref{legendre-data-fig} shows a small artificial data set of 3 species ob
 
 
 
-
 ![\label{legendre-data-fig}](figure/legendre-data-plot.pdf) 
-
 
 For the sake of argument, assume the gradient shown in Figure \ref{legendre-data-fig} is temporal and the samples form a stratigraphic sequence. If one were to take the first principal component axis scores from such an ordination as a summary of change in the data the pattern shown in panel C of Figure \ref{legendre-data-fig} would be observed, suggesting oscillatory behaviour. Such behaviour is totally contrary to the true response along the gradient that we know to be present because these are articificial data. In this case, at least two PCs would be required to summarise the main features in this data set, where in practice there is only a single gradient, which, given a more suitable technique, could be recovered as a single component. It is in this regard that I introduce principal curves as one way to extract such a gradient from palaeoecological data.
 
@@ -53,12 +47,9 @@ Such horseshoe or arched configurations often occur in real palaeocological data
 
 
 
-
-
 When PCA is applied to Abernethy data a pronounced arched configuration is observed with two strong directions of change that align with the first and second principal components (Figure \ref{abernethy-pca-fig}a). The first principal component largely acocunts for change after 9000 
 
 ![\label{abernethy-pca-fig}](figure/abernethy-pca-plot.pdf) 
-
 
 ## Principal Curves
 A principal curve (PCr) is a smooth, one-dimensional curve that passes through the middle of a set of points (observations) $m$ dimensions, where $m$ refers to the number of variables (species for example). A PCr can be thought of as a generalisation of the first principal component line but, instead of being linear, is a smoothly varying curve. PCrs are also related to various forms of smooth regression used as scatterplot smoothers for example. To demonstrate the associations between PCrs, linear regression, scatterplot smoothing and PCA, consider a simple 2-d sample of data with observations on two variables $x$ and $y$, with 50 observations of each. $x$ takes values in the range $0, ..., 1$, and $y$ is generated from the cubic equation
@@ -67,16 +58,13 @@ where $\varepsilon$ is Gaussian noise with $\mu$ = 0 and $\sigma$ = 0.05.
 
 ![\label{PCcomparison}Relationship between (a) linear regression, (b) principal components analysis, (c) smoothing splines, and (d) principal curves each applied a simple 2-dimensional data set.](figure/comparison-figure.pdf) 
 
-
 In the least squares linear regression relating $x$ and $y$ with $y$ in the response role the line of best fit through these data is the one that minimises the sum of squared errors in $y$: all the error is assumed to be in $y$ with $x$ known wihtout error. Panel a in  Figure \ref{PCcomparison} illustrates the linear regression fit to these data, with the narrow vertical bars illustrating the distances between the observations and the fitted line whose squares are minimised. In PCA, neither variable plays the role of response or predictor and errors are now minimised in both $x$ and $y$. This situation is shown in panel b of Figure \ref{PCcomparison}. Note that the distances between the observations and the fitted line (principal component) are measured orthogonal to the line in constrast to the regression situation and mean that the squared error in both $x$ and $y$ is evaluated and minimised.
 
 The models discussed so far are both straight lines through the data. Depending on the relationship between $x$ and $y$ a more complex non-linear relationship may be required. Smoothing splines are a semi-parametric generalisation of the linear least squares model, where a smooth curve is fitted to the data that minimises the sum of squared distances in $y$ subject to some constraint on the complexity of the fitted curve. The relationship between $x$ and $y$ is derived from the data themselves rather than specified *a priori* by the analyst, but, as with linear regression, the curve is fitted by consideration of the error in $y$ only. The smoothing spline fit to the example data, using \~5.49 degrees of freedom (as selected via generalised cross-validation; GCV) is shown in panel c of Figure \ref{PCcomparison}. Principal curves combine the features of orthogonal errors from PCA with the non-linear, data analytical fit from smoothing splines. Panel d shows a principal curve fitted to the example data.
 
 
 
-
 ![\label{iterations-fig}](figure/iterations-figure.pdf) 
-
 
 Principal curves are fitted using a two-stage iterative algorithm, which starts from any smooth curve through the data. Usually a PCA or CA axis is used as the starting curve. The first stage of the algorithm is the projection step; the observations are projected onto the current curve. Each observation projects onto a the location on the curve to which it is closest (shortest Euclidean distance). The distance along the curve from an arbitrarily chosen end is recorded for each projected observation. These distances are the arc lengths along the curve and can be thought of as the axis score for the principal curve.
 
@@ -110,11 +98,6 @@ Once a principal curve has been fitted it is essential that the resulting curve 
 
 The remainder of this paper will use a combination of simulated data and real data examples to illustrate the properties of principal curves applied to palaeo data and to illustrate the improved ability of principal curves to extract long or dominant gradients from stratigrpahic data compared to the other ordination methods, such as PCA and CA.
 
-
-
-
-![\label{packing-model-fig}](figure/packing-model-figure.pdf) 
-
 # Methods
 
 ## Simulated data
@@ -129,12 +112,16 @@ In each case the amount of noise was varied. PCA, CA and a principal curve were 
 ### Simple species packing model
 In the species packing model Gaussian species response curves along an environmental gradient are subject to four conditions
 
- 1. species tolerances $t_k$ are equal ($t_k = t \forall k$)
- 2. equal maxima $c_k$ for all species ($c_k = c \forall k$)
+ 1. species tolerances $t_k$ are equal ($t_k = t \; \forall \; k$)
+ 2. equal maxima $c_k$ for all species ($c_k = c \; \forall \; k$)
  3. species optima $u_k$ are dispersed equally along the environmental gradient
  4. sampling locations along the gradient cover the entire range of the gradient and are also equally spaced.
 
-Data were generated from this model consisting of $n = 100$ samples, and $m = 50$ species, each with tolerance $t = 10$ and height $h = 10$. These parameters define the mean response or expectation $E()$. Simulated count data for each species was then generated via random draws from a negative binomial distribution (dispersion parameter $\theta = 1$ ($\alpha = 1$)) with mean given by the value of the response function along the gradient. An example data set is shown in Figure \ref{packing-model-fig}.
+Data were generated from this model consisting of *n* = 100 samples, and *m* = 50 species, each with tolerance *t* = 10 and height *h* = 10. These parameters define the mean response or expectation $E()$. Simulated count data for each species was then generated via random draws from a negative binomial distribution (dispersion parameter $\theta = 1$ ($\alpha = 1$)) with mean given by the value of the response function along the gradient. An example data set is shown in Figure \ref{packing-model-fig}.
+
+
+
+![\label{packing-model-fig}](figure/packing-model-figure.pdf) 
 
 ### Complex single gradient model
 

@@ -16,6 +16,8 @@ template: paper_template.latex
 -->
 
 ```{r prelim-opts, echo=FALSE}
+require("knitr")
+render_markdown()
 opts_chunk$set(echo = FALSE, dev = "pdf")
 ```
 
@@ -149,7 +151,8 @@ ord.ssp <- with(p.ssp, order(x))
 
 ## plot
 layout(matrix(1:4, ncol = 2, byrow = TRUE))
-op <- par(mar = c(4,4,2,1) + 0.1)
+CEX <- 0.8
+op <- par(mar = c(4,4,2,1) + 0.1, cex = CEX, cex.lab = CEX, cex.axis = CEX, cex.sub = CEX)
 ylim <- range(d.s$y, pc.d$s[,2])
 xlim <- range(d.s$x, pc.d$s[,1])
 ord <- with(d.s, order(x))
@@ -194,10 +197,10 @@ f12 <- prcurve(d.s, method = "pca", trace = TRUE, maxit = 12)
 
 ```{r iterations-figure, fig.height=5, fig.width=5, fig.cap="\\label{iterations-fig}"}
 layout(matrix(1:4, ncol = 2, byrow = TRUE))
-op <- par(mar = c(5,4,1,1) + 0.1)
 CEX <- 0.8
+op <- par(mar = c(5,4,1,1) + 0.1, cex = CEX, cex.lab = CEX, cex.axis = CEX, cex.sub = CEX)
 prevCol <- rgb(255, 0, 0, 126, maxColorValue = 255)
-plot(f0, cex = CEX)
+plot(f0)
 title(sub = "Initial Curve: PC1")
 plot(f1, cex = CEX)
 lines(f0, segments = FALSE, col = prevCol, lwd = 1)
@@ -250,31 +253,6 @@ Once a principal curve has been fitted it is essential that the resulting curve 
 
 The remainder of this paper will use a combination of simulated data and real data examples to illustrate the properties of principal curves applied to palaeo data and to illustrate the improved ability of principal curves to extract long or dominant gradients from stratigrpahic data compared to the other ordination methods, such as PCA and CA.
 
-```{r packing-model-data}
-require("coenocliner")
-## Simulate a 100 unit 1-d gradient with counts from a negative binomial
-## 50 species, equally spaced optima, equal tolerances, equal heights
-gspp <- 50
-gloc <- 20:120
-gopt <- seq(0, 140, length.out = gspp)
-gtol <- rep(10, gspp)
-gh <- rep(10, gspp)
-set.seed(1)
-gsimMu <- sim1dNegbinom(gloc, gopt, gtol, gh, alpha = 1, expectation = TRUE)
-set.seed(1)
-gsim <- sim1dNegbinom(gloc, gopt, gtol, gh, alpha = 1, expectation = FALSE)
-```
-
-```{r packing-model-figure, fig.height=3, fig.width=6.5, dev.args=list(pointsize=8), fig.cap="\\label{packing-model-fig}"}
-layout(matrix(1:2, ncol = 2))
-op <- par(mar = c(5,4,0.5,0.5) + 0.1)
-xlab <- "Gradient"
-ylab <- "Abundance"
-matplot(gloc, gsimMu, type = "l", lty = "solid", xlab = xlab, ylab = ylab)
-matplot(gloc, gsim, type = "l", lty = "solid", xlab = xlab, ylab = ylab)
-par(op)
-layout(1)
-```
 # Methods
 
 ## Simulated data
@@ -289,12 +267,39 @@ In each case the amount of noise was varied. PCA, CA and a principal curve were 
 ### Simple species packing model
 In the species packing model Gaussian species response curves along an environmental gradient are subject to four conditions
 
- 1. species tolerances $t_k$ are equal ($t_k = t \forall k$)
- 2. equal maxima $c_k$ for all species ($c_k = c \forall k$)
+ 1. species tolerances $t_k$ are equal ($t_k = t \; \forall \; k$)
+ 2. equal maxima $c_k$ for all species ($c_k = c \; \forall \; k$)
  3. species optima $u_k$ are dispersed equally along the environmental gradient
  4. sampling locations along the gradient cover the entire range of the gradient and are also equally spaced.
 
-Data were generated from this model consisting of $n = 100$ samples, and $m = 50$ species, each with tolerance $t = 10$ and height $h = 10$. These parameters define the mean response or expectation $E()$. Simulated count data for each species was then generated via random draws from a negative binomial distribution (dispersion parameter $\theta = 1$ ($\alpha = 1$)) with mean given by the value of the response function along the gradient. An example data set is shown in Figure \ref{packing-model-fig}.
+Data were generated from this model consisting of *n* = 100 samples, and *m* = 50 species, each with tolerance *t* = 10 and height *h* = 10. These parameters define the mean response or expectation $E()$. Simulated count data for each species was then generated via random draws from a negative binomial distribution (dispersion parameter $\theta = 1$ ($\alpha = 1$)) with mean given by the value of the response function along the gradient. An example data set is shown in Figure \ref{packing-model-fig}.
+
+```{r packing-model-data}
+suppressPackageStartupMessages(require("coenocliner"))
+## Simulate a 100 unit 1-d gradient with counts from a negative binomial
+## 50 species, equally spaced optima, equal tolerances, equal heights
+gspp <- 50
+gloc <- 20:120
+gopt <- seq(0, 140, length.out = gspp)
+gtol <- rep(10, gspp)
+gh <- rep(10, gspp)
+params <- cbind(opt = gopt, tol = gtol, h = gh)
+gsimMu <- coenocline(gloc, params = params, responseModel = "gaussian", expectation = TRUE)
+set.seed(1)
+gsim <- coenocline(gloc, params = params, responseModel = "gaussian",
+                   countModel = "negbin", countParams = list(alpha = 1))
+```
+
+```{r packing-model-figure, fig.height=3, fig.width=6.5, dev.args=list(pointsize=8), fig.cap="\\label{packing-model-fig}"}
+layout(matrix(1:2, ncol = 2))
+op <- par(mar = c(5,4,0.5,0.5) + 0.1)
+xlab <- "Gradient"
+ylab <- "Abundance"
+matplot(gloc, gsimMu, type = "l", lty = "solid", xlab = xlab, ylab = ylab)
+matplot(gloc, gsim, type = "l", lty = "solid", xlab = xlab, ylab = ylab)
+par(op)
+layout(1)
+```
 
 ### Complex single gradient model
 
